@@ -4,6 +4,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 import time
 import threading
 import random
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -44,6 +45,14 @@ def schedule_marketing_message(to):
 
     threading.Thread(target=delayed_message).start()
 
+def is_restaurant_open():
+    """Verifica se o restaurante está aberto com base na hora atual."""
+    now = datetime.now()
+    # Restaurante aberto de segunda a sábado das 11:00 às 14:00
+    if now.weekday() < 5 and 11 <= now.hour < 14:  # 0=segunda, 1=terça, ..., 6=domingo
+        return True
+    return False
+
 @app.route('/bot', methods=['POST'])
 def bot():
     """Recebe mensagens e responde automaticamente."""
@@ -57,17 +66,20 @@ def bot():
     if from_number in marketing_queue:
         response.message(marketing_queue.pop(from_number))
 
+    # Verifica se o restaurante está aberto
+    if not is_restaurant_open():
+        response.message("🚫 O restaurante está fechado no momento. Funcionamos de segunda a sábado, das 11h às 14h. Volte mais tarde!")
+        return str(response)
+
     # Verifica se é um pedido usando padrões comuns
     if "total do pedido" in msg or "====== pedido" in msg:
-        order_message = """
-🎉 Pedido Recebido! 🎉
+        order_message = f"""
+        ✅ Seu pedido foi confirmado com sucesso e está em preparo!   
+        Agradecemos pela preferência e estamos ansiosos para servi-lo! 😊
 
-✅ Seu pedido foi registrado com sucesso! 
-   Agradecemos pela preferência e estamos ansiosos para servi-lo! 😊
-
-🛵 Prazo de entrega: 40 a 60 minutos.
-"""
-        response.message(order_message)
+        🛵 Prazo de entrega: 40 a 60 minutos.
+        """
+        response.message(order_message.strip())
         customer_states[from_number] = 'ordered'  # Marca como pedido feito
         return str(response)
 
@@ -115,4 +127,3 @@ def test():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
