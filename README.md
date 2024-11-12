@@ -1,35 +1,34 @@
-WhatsApp Bot para Restaurantes
+🍔 WhatsApp Bot para Restaurantes 🍔
 
-Este projeto é um bot para WhatsApp desenvolvido para automatizar o atendimento em restaurantes, permitindo gerenciar pedidos, responder a perguntas frequentes e enviar mensagens de marketing personalizadas aos clientes.
+Este projeto é um bot para WhatsApp, desenvolvido para automatizar o atendimento de restaurantes! Agora, os clientes podem fazer pedidos, ver o cardápio, consultar horário de funcionamento e muito mais de forma simples e rápida! 💬✨
 
-Funcionalidades
+Funcionalidades 🚀
 
-Menu Interativo: Oferece opções para fazer pedidos, visualizar o cardápio, horário de funcionamento e localização.
-Confirmação de Pedidos: Recebe pedidos e confirma com o cliente, mostrando o prazo de entrega.
-Marketing Automatizado: Envia mensagens promocionais se o cliente permanecer inativo por mais de 5 minutos.
-Feedback: Solicita feedback do cliente após 1 hora do pedido.
-Tecnologias Utilizadas
+🍽️ Menu Interativo: Escolha entre fazer um pedido, ver o cardápio, horário e localização.
+✅ Confirmação de Pedido: Receba a confirmação e o prazo de entrega.
+💌 Marketing Automático: Envie promoções se o cliente ficar inativo por mais de 5 minutos.
+📝 Feedback: Solicite feedback após 1 hora do pedido.
+Tecnologias ⚙️
 
-Python e Flask: Framework web para construir a lógica do bot.
-Twilio API: Integração com o WhatsApp para envio e recebimento de mensagens.
-Threading e time: Para agendamento e envio de mensagens automáticas.
-Instalação
+🐍 Python + Flask: Framework web para criar a lógica do bot.
+📱 Twilio API: Para integração com o WhatsApp e comunicação com os clientes.
+⏳ Threading + time: Para agendar mensagens automáticas e interações.
+🛠️ Instalação
 
-Clone este repositório:
+Clone o repositório:
 git clone https://github.com/allankdev/botwhats.git
 cd botwhats
 Instale as dependências:
 pip install -r requirements.txt
 Inicie o servidor:
 python3 bot.py
-Ou, para ambientes de produção, use:
+Ou use Gunicorn para produção:
 
 gunicorn app:app
-Uso
+💬 Uso
 
-Configure a URL do Twilio para apontar para o endpoint /bot do seu servidor. O bot responderá automaticamente com o menu de opções e processará as mensagens conforme o fluxo definido.
+Configure a URL do Twilio para o endpoint /bot. O bot irá responder com o menu e processar as interações automaticamente.
 
-Contribuição
+💡 Contribuição
 
-Sinta-se à vontade para abrir issues ou enviar PRs com sugestões e melhorias.
-
+Sinta-se à vontade para sugerir melhorias, abrir issues ou enviar pull requests!
