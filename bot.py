@@ -26,20 +26,25 @@ customer_states = {}
 marketing_queue = {}
 
 def generate_marketing_message():
-    """Gera uma mensagem de marketing aleatória."""
+    """Gera uma mensagem de marketing mais criativa e engraçada."""
     messages = [
-        "🌟 Olá! Sabia que a vida é como uma quentinha? Às vezes precisa de um pouco mais de tempero! 🔥",
-        "✨ Ei, você! Estamos com saudades do seu paladar! Venha dar uma espiadinha no nosso cardápio! 😋",
-        "🍽️ Seu estômago está gritando por comida! Passe no Lar Brasa e faça ele sorrir. 😄",
-        "🥳 Estamos esperando você para uma festa no seu paladar! 🎉",
-        "🎈 Oi! Se a sua fome tivesse um nome, seria 'Lar Brasa'. Venha nos visitar! 🍽️💖"
+        "🍽️ Fala sério, quem não ama um prato delicioso? Vem pro Lar Brasa e transforma sua fome em felicidade! 😋",
+        "🔥 Fome de verdade é aquela que só o Lar Brasa pode saciar! Não deixe ela te vencer, venha logo! 🍔",
+        "🚨 Alerta de fome: seu estômago está chamando, e a única solução é o Lar Brasa!  Venha logo, a fome não espera! 😜",
+        "🥳 A comida aqui no Lar Brasa é tão boa que até o GPS vai querer te levar até nós! 🍖",
+        "🎉 A vida é curta, mas o prazer de comer no Lar Brasa dura o suficiente para te fazer sorrir o dia todo! 😍",
+        "🛸 Já pensou em uma viagem para o sabor? Vem pro Lar Brasa e decola para o paraíso da comida boa! ✈️🍲",
+        "⚡ Fome + Lar Brasa = Felicidade garantida! Não perca tempo, vem fazer seu pedido agora mesmo! 🍛💥",
+        "🌟 Você e o Lar Brasa: uma combinação perfeita! Sabor incrível, alegria garantida! 😎",
+        "💥 Explosão de sabor? Só no Lar Brasa! Vem e prova a nossa comida que é puro amor! 💖",
+        "😜 Tá esperando o quê? A sua fome não vai esperar e o Lar Brasa tem exatamente o que você precisa! 🔥"
     ]
     return random.choice(messages)
 
 def schedule_marketing_message(to):
-    """Agenda uma mensagem de marketing se nenhum pedido for feito em 5 minutos."""
+    """Agenda uma mensagem de marketing se nenhum pedido for feito em 10 minutos."""
     def delayed_message():
-        time.sleep(300)  # Espera 5 minutos
+        time.sleep(600)  # Espera 10 minutos
         # Se o cliente ainda estiver na espera e não tiver feito pedido
         if customer_states.get(to) == 'waiting':
             marketing_queue[to] = generate_marketing_message()
@@ -57,7 +62,8 @@ def bot():
 
     # Verifica se há uma mensagem de marketing pendente e envia antes de qualquer outra resposta
     if from_number in marketing_queue:
-        response.message(marketing_queue.pop(from_number))
+        response.message(marketing_queue.pop(from_number))  # Envia a mensagem de marketing
+        return str(response)  # Retorna sem o menu, apenas a mensagem de marketing
 
     # Verifica se é um pedido usando padrões comuns
     if "total do pedido" in msg or "====== pedido" in msg:
@@ -86,7 +92,8 @@ def bot():
     elif msg in ['4', 'localizacao']:
         response.message("📍 Estamos na Rua José Serrano Navarro, 252 - Castelo Branco. Te esperamos!")
     elif msg in ['0', 'atendente']:
-        response.message("💬 Mande uma mensagem e responderemos o mais rápido possível!")
+        # Alterando a resposta para instruir o cliente a ligar
+        response.message("📞 Para falar com um atendente, por favor ligue para o número: 83 98612-9752.")
     else:
         # Responde com o menu para qualquer outra mensagem
         response.message(MENU)
